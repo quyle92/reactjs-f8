@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    let h1DOM = document.createElement('h1');
+    h1DOM.title = 'hello world';
+    h1DOM.className = 'heading';
+    h1DOM.innerText = 'Hello world';
+    document.body.appendChild(h1DOM);
+
+    let h1React = React.createElement('h1', {
+        title: 'Hello world',
+        className: 'heading',
+    }, 'Hello world');
+
+    let ulDOM = document.createElement('ul');
+    let liDOM1 = document.createElement('li');
+    liDOM1.innerText = "PHP";
+    let liDOM2 = document.createElement('li');
+    liDOM2.innerText = "Nodejs";
+    ulDOM.appendChild(liDOM1);
+    ulDOM.appendChild(liDOM2);
+    document.body.appendChild(ulDOM);
+
+    let ulReact = React.createElement(
+        'ul',
+        null,
+        React.createElement('li', null, 'PHP'),
+        React.createElement('li', null, 'Nodejs'),
+    );
+
+    let postItem = React.createElement(
+        'div',
+        {
+            className: 'post-item'
+        },
+        React.createElement(
+            'h2',
+            {
+                title: 'Learn React at F8.'
+            },
+            'Learn React at F8.'
+        ),
+        React.createElement(
+            'p',
+            {
+                title: 'Learn React from A to Z.'
+            },
+            'Learn React from A to Z.'
+        ),
+
+    );
+    const root = document.getElementById('root');
+    ReactDOM.render(postItem, root)
+
+</script>
+
+</html>

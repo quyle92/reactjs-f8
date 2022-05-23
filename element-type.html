@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        let getUsers = async () => {
+            let url = 'https://jsonplaceholder.typicode.com/users'
+            try {
+                let res = await fetch(url);
+                let users = await res.json();
+                return users;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        let users = getUsers().then(users => {
+            users.map(user => {
+                <User
+                    name={user.name}
+                    email={user.email}
+                >
+                </User>
+            })
+            function Header(props) {
+                return <h1>Hello, {props.name}</h1>;
+            }
+            function PostItems(props) {
+                let items = [];
+                for (let i = 0; i < props.numTimes; i++) {
+                    items.push(
+                        <div className="post-item" key={i}>
+                            <img src="http://placehold.it/" />
+                            <h2>This is title number {i + 1}</h2>
+                        </div>
+                    );
+                }
+                return <div>{items}</div>;
+            }
+            function User({ user, onClick }) {
+                return (
+                    <div>
+                        <p onClick={(e) =>
+                            onClick(e, user)}>{user.name}</p>
+                        <p>{user.email}</p>
+                    </div>
+                );
+            }
+
+            function App() {
+                let handleClick = (e, user) => console.log(e.target, user.name)
+                return (
+                    <div className="wrapper">
+                        <Header name="quy"></Header>
+                        <div className="post-list">
+                            <PostItems numTimes="5" />
+                        </div>
+                        <button
+                            onClick={
+                                (e) => console.log(Math.random(), e.target)
+                            }
+                        >
+                            Click me
+                        </button>
+                        {
+                            users.map((user, index) => {
+                                return (
+                                    <User
+                                        key={index}
+                                        user={user}
+                                        onClick={handleClick
+                                        }
+                                    >
+                                    </User>
+                                );
+                            })
+                        }
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById('root'));
+        });
+
+
+    </script>
+</body>
+
+</html>
